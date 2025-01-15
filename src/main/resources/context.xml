@@ -29,17 +29,17 @@
 
 
     <!--    Person start-->
-    <context:property-placeholder location="classpath:person.properties"/>
+<!--    <context:property-placeholder location="classpath:person.properties"/>-->
 
-    <bean id="personDao"
-          class="ua.klunnyi.springcourse.music.dao.PersonDaoSimple">
-    </bean>
+<!--    <bean id="personDao"-->
+<!--          class="ua.klunnyi.springcourse.music.dao.PersonDaoSimple">-->
+<!--    </bean>-->
 
-    <bean id="personServiceImpl"
-          class="ua.klunnyi.springcourse.music.service.PersonServiceImpl">
-        <constructor-arg ref="personDao"/>
-        <constructor-arg value="${person.year}"/>
-    </bean>
+<!--    <bean id="personServiceImpl"-->
+<!--          class="ua.klunnyi.springcourse.music.service.PersonServiceImpl">-->
+<!--        <constructor-arg ref="personDao"/>-->
+<!--        <constructor-arg value="${person.year}"/>-->
+<!--    </bean>-->
     <!--    Person end-->
 
 
@@ -48,43 +48,43 @@
     <!--        <constructor-arg value="Sasha"/>-->
     <!--    </bean>-->
 
-    <bean id="springBean"
-          class="ua.klunnyi.springcourse.music.testBean.TestBean">
-        <constructor-arg value="Sasha"/>
-    </bean>
+<!--    <bean id="springBean"-->
+<!--          class="ua.klunnyi.springcourse.music.testBean.TestBean">-->
+<!--        <constructor-arg value="Sasha"/>-->
+<!--    </bean>-->
 
-    <bean id="musicBean1"
-          class="ua.klunnyi.springcourse.music.model.impl.ClassicalMusic"
-          scope="prototype"
-          factory-method="getInstance"/>
+<!--    <bean id="musicBean1"-->
+<!--          class="ua.klunnyi.springcourse.music.model.impl.ClassicalMusic"-->
+<!--          scope="prototype"-->
+<!--          factory-method="getInstance"/>-->
 
-    <bean id="musicBean2"
-          class="ua.klunnyi.springcourse.music.model.impl.RockMusic" scope="prototype"/>
+<!--    <bean id="musicBean2"-->
+<!--          class="ua.klunnyi.springcourse.music.model.impl.RockMusic" scope="prototype"/>-->
 
-    <bean id="musicBean3"
-          class="ua.klunnyi.springcourse.music.model.impl.RapMusic" scope="prototype"/>
+<!--    <bean id="musicBean3"-->
+<!--          class="ua.klunnyi.springcourse.music.model.impl.RapMusic" scope="prototype"/>-->
 
-    <bean id="musicPlayer"
-          class="ua.klunnyi.springcourse.music.model.MusicPlayer"
-          scope="singleton"
-          init-method="doMyInit"
-          destroy-method="doMyDestroy">
-        <!--        <constructor-arg ref="classicalMusic"/>-->
-        <!--        Это внедрение зависимости через сеттер-->
-        <property name="music" ref="musicBean1"/>
+<!--    <bean id="musicPlayer"-->
+<!--          class="ua.klunnyi.springcourse.music.model.MusicPlayer"-->
+<!--          scope="singleton"-->
+<!--          init-method="doMyInit"-->
+<!--          destroy-method="doMyDestroy">-->
+<!--        &lt;!&ndash;        <constructor-arg ref="classicalMusic"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;        Это внедрение зависимости через сеттер&ndash;&gt;-->
+<!--        <property name="music" ref="musicBean1"/>-->
 
-        <property name="name" value="${musicPlayer.name}"/>
-        <property name="volume" value="${musicPlayer.volume}"/>
+<!--        <property name="name" value="${musicPlayer.name}"/>-->
+<!--        <property name="volume" value="${musicPlayer.volume}"/>-->
 
-        <property name="musicList">
-            <list>
-                <ref bean="musicBean1"/>
-                <ref bean="musicBean2"/>
-                <ref bean="musicBean3"/>
-            </list>
+<!--        <property name="musicList">-->
+<!--            <list>-->
+<!--                <ref bean="musicBean1"/>-->
+<!--                <ref bean="musicBean2"/>-->
+<!--                <ref bean="musicBean3"/>-->
+<!--            </list>-->
 
-        </property>
-    </bean>
+<!--        </property>-->
+<!--    </bean>-->
 
 
     <!--    <bean id="springBean"-->

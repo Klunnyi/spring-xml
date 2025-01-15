@@ -5,8 +5,8 @@ import ua.klunnyi.springcourse.csv_reader.model.Question;
 import java.util.List;
 
 public class AppService {
-    private final TestingService testingService;
     private final ConsoleService consoleService;
+    private final TestingService testingService;
 
     public AppService(TestingService testingService, ConsoleService consoleService) {
         this.testingService = testingService;
