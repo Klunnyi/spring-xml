@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:property-placeholder location="classpath:musicPlayer.properties"/>
+
+    <!-- Bean для работы с CSV-файлом -->
+    <bean id="csvReader" class="ua.klunnyi.springcourse.csv_reader.model.CsvReader"/>
+
+    <!-- Сервис для тестирования -->
+    <bean id="testingService" class="ua.klunnyi.springcourse.csv_reader.service.TestingService">
+        <constructor-arg ref="csvReader"/>
+    </bean>
+
+    <!-- Сервис для консольного взаимодействия -->
+    <bean id="consoleService" class="ua.klunnyi.springcourse.csv_reader.service.ConsoleService"/>
+
+    <!-- Главный сервис приложения -->
+    <bean id="appService" class="ua.klunnyi.springcourse.csv_reader.service.AppService">
+        <constructor-arg ref="testingService"/>
+        <constructor-arg ref="consoleService"/>
+    </bean>
+
+
+    <!--    Person start-->
+    <context:property-placeholder location="classpath:person.properties"/>
+
+    <bean id="personDao"
+          class="ua.klunnyi.springcourse.music.dao.PersonDaoSimple">
+    </bean>
+
+    <bean id="personServiceImpl"
+          class="ua.klunnyi.springcourse.music.service.PersonServiceImpl">
+        <constructor-arg ref="personDao"/>
+        <constructor-arg value="${person.year}"/>
+    </bean>
+    <!--    Person end-->
+
+
+    <!--    <bean id="springBean"-->
+    <!--          class="ua.klunniy.springcourcece.testBeanBean.TestBean">-->
+    <!--        <constructor-arg value="Sasha"/>-->
+    <!--    </bean>-->
+
+    <bean id="springBean"
+          class="ua.klunnyi.springcourse.music.testBean.TestBean">
+        <constructor-arg value="Sasha"/>
+    </bean>
+
+    <bean id="musicBean1"
+          class="ua.klunnyi.springcourse.music.model.impl.ClassicalMusic"
+          scope="prototype"
+          factory-method="getInstance"/>
+
+    <bean id="musicBean2"
+          class="ua.klunnyi.springcourse.music.model.impl.RockMusic" scope="prototype"/>
+
+    <bean id="musicBean3"
+          class="ua.klunnyi.springcourse.music.model.impl.RapMusic" scope="prototype"/>
+
+    <bean id="musicPlayer"
+          class="ua.klunnyi.springcourse.music.model.MusicPlayer"
+          scope="singleton"
+          init-method="doMyInit"
+          destroy-method="doMyDestroy">
+        <!--        <constructor-arg ref="classicalMusic"/>-->
+        <!--        Это внедрение зависимости через сеттер-->
+        <property name="music" ref="musicBean1"/>
+
+        <property name="name" value="${musicPlayer.name}"/>
+        <property name="volume" value="${musicPlayer.volume}"/>
+
+        <property name="musicList">
+            <list>
+                <ref bean="musicBean1"/>
+                <ref bean="musicBean2"/>
+                <ref bean="musicBean3"/>
+            </list>
+
+        </property>
+    </bean>
+
+
+    <!--    <bean id="springBean"-->
+    <!--          class="ua.klunniy.springcourcece.testBeanBean.TestBean">-->
+    <!--        <constructor-arg value="Sasha"/>-->
+    <!--    </bean>-->
+    <!--    мы указываем спрингу в каком у нас пакете лежат компоненты-->
+    <!--    <context:component-scan base-package="ua.klunniy.springcourcece"/>-->
+    <!--    <context:property-placeholder location="classpath:musicPlayer.properties"/>-->
+
+
+    <!--    <bean id="musicBean1"-->
+    <!--          class="ua.klunniy.springcourcece.model.impl.ClassicalMusic"-->
+    <!--          factory-method="getClassicalMusic">-->
+    <!--&lt;!&ndash;        <property name="volume" value="50"/>&ndash;&gt;-->
+    <!--    </bean>-->
+
+    <!--    <bean id="musicBean2" class="ua.klunniy.springcourcece.model.impl.JazzMusic">-->
+    <!--        <property name="volume" value="77"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="musicBean3" class="ua.klunniy.springcourcece.model.impl.RockMusic">-->
+    <!--        <property name="volume" value="${musicPlayer.volume}"/>-->
+    <!--    </bean>-->
+
+    <!--    &lt;!&ndash;    statefull - когда у нашего бина есть изменяемые состояния и тогда мы ставим scope="prototype"&ndash;&gt;-->
+    <!--    <bean id="musicPlayer"-->
+    <!--          class="ua.klunniy.springcourcece.controller.MusicPlayer"-->
+    <!--          scope="prototype"-->
+    <!--          init-method="doMyInit"-->
+    <!--          destroy-method="doMyDestroy">-->
+    <!--        &lt;!&ndash;        <constructor-arg ref="musicBean"/>&ndash;&gt;-->
+    <!--        <property name="music" ref="musicBean2"/>-->
+    <!--        <property name="name" value="${musicPlayer.name}"/>-->
+    <!--        <property name="volume" value="${musicPlayer.volume}"/>-->
+    <!--        <property name="musicList">-->
+    <!--            <list>-->
+    <!--                <ref bean="musicBean1"/>-->
+    <!--                <ref bean="musicBean2"/>-->
+    <!--                <ref bean="musicBean3"/>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+
+    <!--    <context:property-placeholder location="classpath:ua.klunniy.springcourcece"/>-->
+    <!--    <context:component-scan base-package="ua.klunniy.springcourcece"/>-->
+
+    <!--    <bean id="rockBean" class="com.klunniy.ua.klunniyi.springcourse.musicGenres.impl.RockGenres"/>-->
+    <!--<constructor-arg value="Serhii"/> -->
+
+    <!--    <bean id="popBean" class="com.klunniy.ua.klunniyi.springcourse.musicGenres.impl.PopGenres"/>-->
+    <!--    <bean id="classicalBean"-->
+    <!--          class="com.klunniy.ua.klunniyi.springcourse.musicGenres.impl.ClassicalGenres"-->
+    <!--          init-method="doMyInit"-->
+    <!--          destroy-method="doMyDestroy"-->
+    <!--          scope="prototype"-->
+    <!--          factory-method="getClassicalMusic"/>-->
+
+    <!--    <bean id="musicPlayer" class="com.klunniy.ua.klunniyi.springcourse.player.MusicPlayer" scope="prototype">-->
+    <!--        &lt;!&ndash;<constructor-arg ref="musicBean"/>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <property name="music" ref="musicBean"/>&ndash;&gt;-->
+    <!--        <constructor-arg>-->
+    <!--            <list>-->
+    <!--                <ref bean="rockBean"/>-->
+    <!--                <ref bean="popBean"/>-->
+    <!--                <ref bean="classicalBean"/>-->
+    <!--            </list>-->
+    <!--        </constructor-arg>-->
+    <!--        <property name="name" value="${musicPlayer.name}"/>-->
+    <!--        <property name="volume" value="${musicPlayer.volume}"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="ukraineFootball"-->
+    <!--          class="com.klunniy.ua.klunniyi.springcourse.musicGenres.impl.UkraineFootball" scope="prototype"-->
+    <!--          init-method="doMyInit"-->
+    <!--          destroy-method="doMyDestroy">-->
+    <!--        <property name="name" value="VICTORY"/>-->
+    <!--    </bean>-->
+</beans>
